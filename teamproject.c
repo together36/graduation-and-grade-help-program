@@ -61,7 +61,7 @@ Subject subjects[] = {
     {JUNIOR, SEMESTER_2, "전공종합설계(1)", REQUIRED, DESIGN, 3},
     {JUNIOR, SEMESTER_2, "머신러닝", OPTIONAL, DESIGN, 3},
 
-    {SENIOR, SEMESTER_1, "고급네트워킹", OPTIONAL, NON_DESIGN, 0},
+    {SENIOR, SEMESTER_1, "고급네트워킹", OPTIONAL, NON_DESIGN, 3},
     {SENIOR, SEMESTER_1, "전공종합설계(2)", REQUIRED, DESIGN, 3},
     {SENIOR, SEMESTER_1, "현장실습(1)", 0, 0, 0},
     {SENIOR, SEMESTER_1, "현장실습(2)", 0, 0, 0},
