@@ -1,31 +1,47 @@
 #include <stdio.h>
+#define REQUIRED 1
+#define OPTIONAL 0
+#define DESIGN 1
+#define NON_DESIGN 0
 
-// °ú¸ñ ±¸Á¶Ã¼ Á¤ÀÇ
+typedef enum {
+    FRESHMAN = 1, // 1í•™ë…„
+    SOPHOMORE,    // 2í•™ë…„
+    JUNIOR,       // 3í•™ë…„
+    SENIOR        // 4í•™ë…„
+} Year;
+
+typedef enum {
+    SEMESTER_1 = 1, // 1í•™ê¸°
+    SEMESTER_2      // 2í•™ê¸°
+} Semester;
+
+// ê³¼ëª© êµ¬ì¡°ì²´ ì •ì˜
 typedef struct {
-    int year;           // ÇĞ³â
-    int semester;       // ÇĞ±â
-    char name[50];      // °ú¸ñ¸í
-    int isRequired;     // Àü°øÇÊ¼ö ¿©ºÎ (1: ÇÊ¼ö, 0: ¼±ÅÃ)
-    int isDesign;       // ¼³°è°ú¸ñ ¿©ºÎ (1: ¼³°è, 0: ÀÏ¹İ)
-    int score;          // ÇĞÁ¡
+    int year;           // í•™ë…„
+    int semester;       // í•™ê¸°
+    char name[50];      // ê³¼ëª©ëª…
+    int isRequired;     // ì „ê³µí•„ìˆ˜ ì—¬ë¶€ (1: í•„ìˆ˜, 0: ì„ íƒ)
+    int isDesign;       // ì„¤ê³„ê³¼ëª© ì—¬ë¶€ (1: ì„¤ê³„, 0: ì¼ë°˜)
+    int score;          // í•™ì 
 } Subject;
 
-// Àü¿ª °ú¸ñ µ¥ÀÌÅÍ
+// ì „ì—­ ê³¼ëª© ë°ì´í„°
 Subject subjects[] = {
-    {1, 1, "ÄÄÇ»ÅÍ°øÇĞÀÔ¹®", 1, 0, 3},
-    {1, 2, "CÇÁ·Î±×·¡¹ÖÀÀ¿ë", 0, 1, 3},
-    {2, 1, "µ¥ÀÌÅÍ±¸Á¶", 1, 0, 3}
+    {FRESHMAN, SEMESTER_1, "ì»´í“¨í„°ê³µí•™ì…ë¬¸", REQUIRED, NON_DESIGN, 3},
+    {FRESHMAN, SEMESTER_2, "Cí”„ë¡œê·¸ë˜ë°ì‘ìš©", OPTIONAL, DESIGN, 3},
+    {SOPHOMORE, SEMESTER_1, "ë°ì´í„°êµ¬ì¡°", REQUIRED, NON_DESIGN, 3}
 };
 int subjectCount = sizeof(subjects) / sizeof(subjects[0]);
 
-int Grade_Calculator(); //ÇĞÁ¡ °è»ê±â
+int Grade_Calculator(); //í•™ì  ê³„ì‚°ê¸°
 
 int main() {
     int year, semester;
 
-    printf("ÇöÀç ÇĞ³âÀ» ÀÔ·ÂÇÏ¼¼¿ä. (ex: 1): ");
+    printf("í˜„ì¬ í•™ë…„ì„ ì…ë ¥í•˜ì„¸ìš”. (ex: 1): ");
     scanf("%d", &year);
-    printf("ÇöÀç ÇĞ±â¸¦ ÀÔ·ÂÇÏ¼¼¿ä. (ex: 2): ");
+    printf("í˜„ì¬ í•™ê¸°ë¥¼ ì…ë ¥í•˜ì„¸ìš”. (ex: 2): ");
     scanf("%d", &semester);
 
     return 0;
