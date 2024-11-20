@@ -61,8 +61,8 @@ Subject subjects[] = {
     {JUNIOR, SEMESTER_2, "전공종합설계(1)", REQUIRED, DESIGN, 3},
     {JUNIOR, SEMESTER_2, "머신러닝", OPTIONAL, DESIGN, 3},
 
-    {SENIOR, SEMESTER_1, "고급네트워킹", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "전공종합설계(2)", 0, 0, 0},
+    {SENIOR, SEMESTER_1, "고급네트워킹", OPTIONAL, NON_DESIGN, 0},
+    {SENIOR, SEMESTER_1, "전공종합설계(2)", REQUIRED, DESIGN, 3},
     {SENIOR, SEMESTER_1, "현장실습(1)", 0, 0, 0},
     {SENIOR, SEMESTER_1, "현장실습(2)", 0, 0, 0},
     {SENIOR, SEMESTER_1, "현장실습(3)", 0, 0, 0},
@@ -80,14 +80,22 @@ Subject subjects[] = {
 
     {SENIOR, SEMESTER_2, "엔터프라이즈애플리케이션", OPTIONAL, NON_DESIGN, 3},
     {SENIOR, SEMESTER_2, "정보보안", OPTIONAL, NON_DESIGN, 3},
-    {SENIOR, SEMESTER_2, "졸업작품", 0, 0, 0},
+    {SENIOR, SEMESTER_2, "졸업작품", REQUIRED, 0, 0},
     {SENIOR, SEMESTER_2, "진로와취창업", 0, 0, 0},
     {SENIOR, SEMESTER_2, "IT창업실습", 0, 0, 0}
 };
 
 int subjectCount = sizeof(subjects) / sizeof(subjects[0]);
 
+int Grade_Calculator(); //학점 계산기
+
 int main() {
-    printf("Total Subjects: %d\n", subjectCount);
+    int year, semester;
+
+    printf("현재 학년을 입력하세요. (ex: 1): ");
+    scanf("%d", &year);
+    printf("현재 학기를 입력하세요. (ex: 2): ");
+    scanf("%d", &semester);
+
     return 0;
 }
