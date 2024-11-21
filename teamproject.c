@@ -63,26 +63,13 @@ Subject subjects[] = {
 
     {SENIOR, SEMESTER_1, "고급네트워킹", OPTIONAL, NON_DESIGN, 3},
     {SENIOR, SEMESTER_1, "전공종합설계(2)", REQUIRED, DESIGN, 3},
-    {SENIOR, SEMESTER_1, "현장실습(1)", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "현장실습(2)", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "현장실습(3)", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "현장실습(4)", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "현장실습(5)", 0, 0, 0},
     {SENIOR, SEMESTER_1, "텍스트마이닝", OPTIONAL, NON_DESIGN, 3},
     {SENIOR, SEMESTER_1, "비즈니스컴퓨팅기술", OPTIONAL, NON_DESIGN, 3},
-    {SENIOR, SEMESTER_1, "자율현장실습(1)", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "자율현장실습(2)", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "자율현장실습(3)", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "자율현장실습(4)", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "자율현장실습(5)", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "직무실무(1)", 0, 0, 0},
-    {SENIOR, SEMESTER_1, "직무실무(2)", 0, 0, 0},
 
     {SENIOR, SEMESTER_2, "엔터프라이즈애플리케이션", OPTIONAL, NON_DESIGN, 3},
     {SENIOR, SEMESTER_2, "정보보안", OPTIONAL, NON_DESIGN, 3},
-    {SENIOR, SEMESTER_2, "졸업작품", REQUIRED, 0, 0},
-    {SENIOR, SEMESTER_2, "진로와취창업", 0, 0, 0},
-    {SENIOR, SEMESTER_2, "IT창업실습", 0, 0, 0}
+    {SENIOR, SEMESTER_2, "졸업작품", REQUIRED, NON_DESIGN, 0},
+    {SENIOR, SEMESTER_2, "진로와취창업", OPTIONAL, NON_DESIGN, 2},
 };
 
 int subjectCount = sizeof(subjects) / sizeof(subjects[0]);
