@@ -176,3 +176,4 @@ void choice_Subjects(int inputYear, int inputSemester) {
     for (int i = 0; i < taken_count; i++) {
         printf("%d. %s\n", taken_subjects[i].number, taken_subjects[i].name);
     }
+}
