@@ -80,10 +80,6 @@ Subject subjects[] = {
 
 void printSubjectsGrid(int targetYear, int targetSemester);
 
-// 이수한 과목 정보를 저장할 배열
-Subject taken_subjects[TOTAL_SUBJECTS];
-int taken_count = 0;
-
 void choice_Subjects(int inputYear, int inputSemester);
 
 
@@ -92,15 +88,16 @@ int main() {
 
     printf("학년을 입력해주세요(ex: 1): ");
     scanf("%d", &inputYear);
-    
+
     printf("학기를 입력해주세요(ex: 2): ");
     scanf("%d", &inputSemester);
 
     printSubjectsGrid(inputYear, inputSemester);
 
+    choice_Subjects(inputYear, inputSemester);
 
     return 0;
-    }
+}
 
 void printSubjectsGrid(int inputYear, int inputSemester) {
     int currentYear = 0;
@@ -127,8 +124,55 @@ void printSubjectsGrid(int inputYear, int inputSemester) {
     }
 }
 
-
+// 이수한 과목 정보를 저장할 배열
+Subject taken_subjects[TOTAL_SUBJECTS];
 
 void choice_Subjects(int inputYear, int inputSemester) {
+    char input[256]; // 사용자가 입력하는 변수
+    char seps[] = " ,\n\t"; // 분리자
+    int taken_count = 0; // 
 
-}
+    printf("\n이수한 과목의 번호를 공백으로 구분하여 입력하세요: ");
+    getchar(); // 입력 버퍼에 남아있는 개행 문자 제거
+    fgets(input, sizeof(input), stdin); // 사용자가 입력한 문자열을 입력받는 부분
+
+    char* token = strtok(input, seps);    // 입력된 문자열 분리
+    while (token != NULL) {
+        int number = atoi(token); // 정수로 형변환
+
+        // 과목 번호 검증
+        if (number >= 1 && number <= TOTAL_SUBJECTS) {
+            // 해당 과목이 입력한 학년과 학기 범위 내에 있는지 확인
+            if (subjects[number - 1].year > inputYear || (subjects[number - 1].year == inputYear && subjects[number - 1].semester > inputSemester)) {
+                printf("과목 번호 %d는 입력한 학년과 학기 범위를 벗어납니다.\n", number);
+            }
+            else {
+                // 이미 선택된 과목인지 확인
+                int already_taken = 0;
+                for (int i = 0; i < taken_count; i++) {
+                    if (taken_subjects[i].number == number) {
+                        already_taken = 1;
+                        break;
+                    }
+                }
+                if (!already_taken) { // 중복 되지 않는다면
+                    // 선택된 과목을 taken_subjects 배열에 추가
+                    taken_subjects[taken_count++] = subjects[number - 1];
+                }
+                else {
+                    printf("과목 번호 %d는 이미 선택되었습니다.\n", number);
+                }
+            }
+        }
+        else {
+            printf("유효하지 않은 과목 번호입니다: %d\n", number);
+        }
+
+        token = strtok(NULL, seps);
+    }
+
+    // 선택된 과목 목록 출력
+    printf("\n선택된 과목 목록:\n");
+    for (int i = 0; i < taken_count; i++) {
+        printf("%d. %s\n", taken_subjects[i].number, taken_subjects[i].name);
+    }
