@@ -78,6 +78,14 @@ Subject subjects[] = {
     {37,SENIOR, SEMESTER_2, "진로와취창업", OPTIONAL, NON_DESIGN, 2},
 };
 
+// 이수한 과목 정보를 저장할 배열
+Subject taken_subjects[TOTAL_SUBJECTS];
+int taken_count = 0;
+
+void choice_menu();
+
+void showTakenSubjects();
+
 void printSubjectsGrid(int targetYear, int targetSemester);
 
 void choice_Subjects(int inputYear, int inputSemester);
@@ -85,6 +93,7 @@ void choice_Subjects(int inputYear, int inputSemester);
 
 int main() {
     int inputYear, inputSemester;
+    void (*pf)(int, int); // 함수 포인터 선언
 
     printf("학년을 입력해주세요(ex: 1): ");
     scanf("%d", &inputYear);
@@ -92,11 +101,57 @@ int main() {
     printf("학기를 입력해주세요(ex: 2): ");
     scanf("%d", &inputSemester);
 
-    printSubjectsGrid(inputYear, inputSemester);
+    pf = printSubjectsGrid;
+    pf(inputYear, inputSemester);
 
-    choice_Subjects(inputYear, inputSemester);
+    pf = choice_Subjects;
+    pf(inputYear, inputSemester);
+
+    choice_menu();
 
     return 0;
+}
+
+void choice_menu() {
+    int choice;
+    int *pi;
+
+    pi = &choice;
+
+    while (1) {
+        printf("\n======메뉴======\n");
+        printf("1. 졸업 요건 확인\n");
+        printf("2. 이수한 과목 목록 보기\n");
+        printf("3. 이수한 과목 목록 수정\n");
+        printf("4. 프로그램 종료\n");
+        printf("메뉴를 선택하세요: ");
+        scanf("%d", pi);
+
+        switch (choice) {
+        case 1:
+
+            break;
+        case 2:
+            showTakenSubjects();
+            break;
+        case 3:
+
+            break;
+        case 4:
+            printf("프로그램을 종료합니다.\n");
+            return;
+        default:
+            printf("잘못된 선택입니다. 다시 입력해주세요.\n");
+            break;
+        }
+    }
+}
+
+void showTakenSubjects() {
+    printf("\n선택된 과목 목록:\n");
+    for (int i = 0; i < taken_count; i++) {
+        printf("%d. %s\n", taken_subjects[i].number, taken_subjects[i].name);
+    }
 }
 
 void printSubjectsGrid(int inputYear, int inputSemester) {
@@ -124,13 +179,9 @@ void printSubjectsGrid(int inputYear, int inputSemester) {
     }
 }
 
-// 이수한 과목 정보를 저장할 배열
-Subject taken_subjects[TOTAL_SUBJECTS];
-
 void choice_Subjects(int inputYear, int inputSemester) {
     char input[256]; // 사용자가 입력하는 변수
     char seps[] = " ,\n\t"; // 분리자
-    int taken_count = 0; // 
 
     printf("\n이수한 과목의 번호를 공백으로 구분하여 입력하세요: ");
     getchar(); // 입력 버퍼에 남아있는 개행 문자 제거
@@ -171,9 +222,5 @@ void choice_Subjects(int inputYear, int inputSemester) {
         token = strtok(NULL, seps);
     }
 
-    // 선택된 과목 목록 출력
-    printf("\n선택된 과목 목록:\n");
-    for (int i = 0; i < taken_count; i++) {
-        printf("%d. %s\n", taken_subjects[i].number, taken_subjects[i].name);
-    }
+    showTakenSubjects();
 }
