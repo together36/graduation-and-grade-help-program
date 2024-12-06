@@ -84,6 +84,7 @@ int taken_count = 0;
 
 void choice_menu(int inputYear, int inputSemester);
 void modifyTakenSubjects(int inputYear, int inputSemester);
+void graduation_check();
 void remove_subjects(int inputYear, int inputSemester);
 void showTakenSubjects();
 void add_subject(int inputYear, int inputSemester);
@@ -121,7 +122,7 @@ void choice_menu(inputYear, inputSemester) {
     pi = &choice;
 
     while (1) {
-        printf("\n======메뉴======\n");
+        printf("\n========메뉴========\n");
         printf("1. 졸업 요건 확인\n");
         printf("2. 이수한 교과목 목록 보기\n");
         printf("3. 이수한 교과목 목록 수정\n");
@@ -131,7 +132,7 @@ void choice_menu(inputYear, inputSemester) {
 
         switch (choice) {
         case 1:
-
+            graduation_check();
             break;
         case 2:
             showTakenSubjects();
@@ -148,6 +149,82 @@ void choice_menu(inputYear, inputSemester) {
         }
     }
 }
+
+void graduation_check() {
+    int required_major_credits = 24; // 전공필수 최소 학점
+    int elective_major_credits = 39; // 전공선택 최소 학점
+    int total_required_credits = 0; // 전공필수 이수 학점
+    int total_elective_credits = 0; // 전공선택 이수 학점
+    int design_course1_taken = 0; // 전공종합설계(1) 이수 여부
+    int design_course2_taken = 0; // 전공종합설계(2) 이수 여부
+    int graduation_project_passed = 0; // 졸업작품 심사 통과 여부
+
+    // 이수한 과목 목록을 기준으로 학점 계산
+    for (int i = 0; i < taken_count; i++) {
+        if (taken_subjects[i].isRequired == REQUIRED) {
+            total_required_credits += taken_subjects[i].score;
+        }
+        else {
+            total_elective_credits += taken_subjects[i].score;
+        }
+
+        // 전공종합설계(1) 체크
+        if (strcmp(taken_subjects[i].name, "전공종합설계(1)") == 0) {
+            design_course1_taken = 1;
+        }
+
+        // 전공종합설계(2) 체크
+        if (strcmp(taken_subjects[i].name, "전공종합설계(2)") == 0) {
+            design_course2_taken = 1;
+        }
+
+        // 졸업작품 체크
+        if (strcmp(taken_subjects[i].name, "졸업작품") == 0) {
+            graduation_project_passed = 1;
+        }
+    }
+
+    // 졸업 요건 충족 여부 확인
+    if (total_required_credits >= required_major_credits &&
+        total_elective_credits >= elective_major_credits &&
+        design_course1_taken &&
+        design_course2_taken &&
+        graduation_project_passed) {
+        printf("\n축하합니다 졸업 요건을 모두 충족하셨습니다!\n");
+        return;
+    }
+
+    // 졸업 요건 부족한 항목 출력
+    printf("\n==== 졸업 요건 확인 ====\n");
+
+    // 전공필수 학점 확인
+    if (total_required_credits < required_major_credits) {
+        printf("- 전공필수가 %d학점 부족합니다.\n", required_major_credits - total_required_credits);
+    }
+
+    // 전공선택 학점 확인
+    if (total_elective_credits < elective_major_credits) {
+        printf("- 전공선택이 %d학점 부족합니다.\n", elective_major_credits - total_elective_credits);
+    }
+
+    // 전공종합설계 확인
+    if (!design_course1_taken) {
+        printf("- 전공종합설계(1)을 이수해야합니다.\n");
+    }
+    
+    if (!design_course2_taken) {
+        printf("- 전공종합설계(2)을 이수해야합니다.\n");
+    }
+
+    // 졸업작품 심사 통과 확인
+    if (!graduation_project_passed) {
+        printf("- 졸업작품 심사를 통과하셔야합니다.\n");
+    }
+
+    printf("=========================\n");
+}
+
+
 
 void modifyTakenSubjects(inputYear, inputSemester) {
     int choice;
