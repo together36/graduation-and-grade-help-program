@@ -85,7 +85,7 @@ int taken_count = 0;
 void choice_menu(int inputYear, int inputSemester);
 void modifyTakenSubjects(int inputYear, int inputSemester);
 void graduation_check();
-void remove_subjects(int inputYear, int inputSemester);
+void remove_subjects();
 void showTakenSubjects();
 void add_subject(int inputYear, int inputSemester);
 
@@ -226,7 +226,7 @@ void graduation_check() {
 
 
 
-void modifyTakenSubjects(inputYear, inputSemester) {
+void modifyTakenSubjects(int inputYear, int inputSemester) {
     int choice;
 
     // 함수 포인터 타입 정의
@@ -250,11 +250,11 @@ void modifyTakenSubjects(inputYear, inputSemester) {
             return;
         }
         else
-            printf("잘못된 숫자입니다.");
+            printf("잘못된 숫자입니다.\n");
     }
 }
 
-void remove_subjects(int inputYear, int inputSemester) {
+void remove_subjects() {
     if (taken_count == 0) {
         printf("이수한 과목이 없습니다.\n");
         return;
