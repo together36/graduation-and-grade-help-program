@@ -86,7 +86,6 @@ void choice_menu(int inputYear, int inputSemester);
 void modifyTakenSubjects(int inputYear, int inputSemester);
 void remove_subjects(int inputYear, int inputSemester);
 void showTakenSubjects();
-void choice_Subjects(int inputYear, int inputSemester);
 void add_subject(int inputYear, int inputSemester);
 
 int main() {
@@ -99,7 +98,7 @@ int main() {
     printf("학기를 입력해주세요(ex: 2): ");
     scanf("%d", &inputSemester);
 
-    pf = choice_Subjects;
+    pf = add_subject;
     pf(inputYear, inputSemester);
 
     pf = choice_menu;
@@ -113,76 +112,6 @@ void showTakenSubjects() {
     for (int i = 0; i < taken_count; i++) {
         printf("%d. %s\n", taken_subjects[i].number, taken_subjects[i].name);
     }
-}
-
-void choice_Subjects(int inputYear, int inputSemester) {
-
-    int currentYear = 0;
-    int currentSemester = 0;
-
-    for (int i = 0; i < TOTAL_SUBJECTS; i++) { //데이터의 순서가 정렬되어 있기 때문에 첫 교과목부터 사용자가 입력한 학년과 학기까지 쭉 출력한다.
-
-        // 현재 과목의 학년과 학기가 사용자 입력 범위를 초과하면 종료
-        if (subjects[i].year > inputYear || (subjects[i].year == inputYear && subjects[i].semester > inputSemester)) { // 학년이 초과하거나 학년은 같은데 학기가 초과하는 경우
-            break;
-        }
-
-        // 학년 또는 학기가 변경되면 헤더 출력
-        if (subjects[i].year != currentYear || subjects[i].semester != currentSemester) {
-            currentYear = subjects[i].year;
-            currentSemester = subjects[i].semester;
-
-            printf("\n%d학년 %d학기\n", currentYear, currentSemester);
-            printf("-------------------------------------------------------------------------------------------------------------------\n");
-        }
-
-        // 교과목 정보 출력 (교과목 번호 포함)
-        printf("%d. %s\n", subjects[i].number, subjects[i].name);
-    }
-
-    char input[256]; // 사용자가 입력하는 변수
-    char seps[] = " ,\n\t"; // 분리자
-
-    printf("\n이수한 교과목의 번호를 공백으로 구분하여 입력하세요: ");
-    getchar(); // 입력 버퍼에 남아있는 개행 문자 제거
-    fgets(input, sizeof(input), stdin); // 사용자가 입력한 문자열을 입력받는 부분
-
-    char* token = strtok(input, seps);    // 입력된 문자열 분리
-    while (token != NULL) {
-        int number = atoi(token); // 정수로 형변환
-
-        // 교과목 번호 검증
-        if (number >= 1 && number <= TOTAL_SUBJECTS) {
-            // 해당 교과목이 입력한 학년과 학기 범위 내에 있는지 확인
-            if (subjects[number - 1].year > inputYear || (subjects[number - 1].year == inputYear && subjects[number - 1].semester > inputSemester)) {
-                printf("교과목 번호 %d는 입력한 학년과 학기 범위를 벗어납니다.\n", number);
-            }
-            else {
-                // 이미 선택된 교과목인지 확인
-                int already_taken = 0;
-                for (int i = 0; i < taken_count; i++) {
-                    if (taken_subjects[i].number == number) {
-                        already_taken = 1;
-                        break;
-                    }
-                }
-                if (!already_taken) { // 중복 되지 않는다면
-                    // 선택된 교과목을 taken_subjects 배열에 추가
-                    taken_subjects[taken_count++] = subjects[number - 1];
-                }
-                else {
-                    printf("교과목 번호 %d는 이미 선택되었습니다.\n", number);
-                }
-            }
-        }
-        else {
-            printf("유효하지 않은 교과목 번호입니다: %d\n", number);
-        }
-
-        token = strtok(NULL, seps);
-    }
-
-    showTakenSubjects();
 }
 
 void choice_menu(inputYear, inputSemester) {
@@ -229,7 +158,7 @@ void modifyTakenSubjects(inputYear, inputSemester) {
     // 함수 포인터 배열
     SubjectFunction functions[] = { add_subject, remove_subjects };
 
-    while (1) { 
+    while (1) {
         printf("\n1. 교과목 추가\n");
         printf("2. 교과목 제거\n");
         printf("3. 메뉴로 돌아가기\n");
